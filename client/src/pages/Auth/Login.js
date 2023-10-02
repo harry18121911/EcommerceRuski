@@ -37,7 +37,7 @@ const Login = () => {
       };
 
     return (
-        <Layout title="Register - Ecommer App">
+        <Layout title="Login - Ecommer App">
         <div className="form-container" style={{ minHeight: "80vh" }}>
           <form onSubmit={handleSubmit}>
             <h4 className="title">LOGIN FORM</h4>
@@ -63,6 +63,17 @@ const Login = () => {
                 required
               />
             </div> 
+            <div className='mb-3'>
+              <button
+                type='button'
+                className='btn btn-primary'
+                onClick={()=>{
+                  navigate("/forgot-password");
+                }}>
+                  Forgot Password
+              </button>
+            </div>
+
             <button type="submit" className="btn btn-primary">
               LOGIN
             </button>
