@@ -14,7 +14,7 @@ router.put('/update-product/:pid', requireSignIn, isAdmin,formidable(),  updateP
 router.get('/get-product', getProductController)
 
 //get single product
-router.get('/get-product:slug', getSingleProductController)
+router.get('/get-product/:slug', getSingleProductController)
 
 //get photo
 router.get('/product-photo/:pid', productPhotoController)
