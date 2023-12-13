@@ -30,21 +30,26 @@ const Header = () => {
               <NavLink to="/" className="nav-link" aria-current="page" href="#">Home</NavLink>
             </li>
             <li className="nav-item dropdown">
-              <a 
+              <Link 
                 className="nav-link dropdown-toggle" 
-                href="localhost:3000" 
-                role="button" 
+                to={"/categories"}                
                 data-bs-toggle="dropdown" 
-                aria-expanded="false">
+                >
                 Categories
-              </a>
+              </Link>
               <ul className='dropdown-menu'>
+                <li>
+                  <Link className='dropdown-item' to={`/categories`}>
+                    All Categories
+                  </Link>
+                </li>
               {categories?.map((c) => (
                 
                   <li>
-                    <p>
+                    
+                    <Link className='dropdown-item' to={`/category/${c.slug}`}>
                       {c.name}
-                    </p>
+                    </Link>
                   </li>
                   ))}
               </ul>
