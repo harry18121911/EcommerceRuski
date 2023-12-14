@@ -22,12 +22,14 @@ import Search from './pages/Search.js';
 import ProductDetails from './pages/ProductDetails.js';
 import Categories from './pages/Categories.js';
 import CategoryProduct from './pages/CategoryProduct.js';
+import CartPage from './pages/CartPage.js';
 function App() {
   return (
     <Routes>
       <Route path='/' element={<HomePage/>} />
       <Route path='/product/:slug' element={<ProductDetails/>} />
       <Route path='/categories' element={<Categories/>} />
+      <Route path='/cart' element={<CartPage/>} />
       <Route path='/category/:slug' element={<CategoryProduct/>}></Route>
       <Route path='/search' element={<Search/>} />
       <Route path="/dashboard" element={<PrivateRoute />}>
