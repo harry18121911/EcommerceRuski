@@ -3,6 +3,7 @@ import Layout from '../components/Layout/Layout'
 import { useCart } from '../context/cart'
 import { useAuth } from '../context/auth'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 const CartPage = () => {
     const [auth, setAuth] = useAuth();
     const [cart, setCart] = useCart();
@@ -15,7 +16,7 @@ const CartPage = () => {
             cart?.map(item => {total = total + item.price})
             return total.toLocaleString("en-US", {
                 style:"currency",
-                currency: "USD"
+                currency: "ARS"
             })
         } catch (error) {
             console.log(error)
@@ -36,7 +37,14 @@ const CartPage = () => {
         }
     }
 
-
+    //pay item
+    const checkout =async (req, res) => { 
+        const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/cart/create-order`)
+        const data = await response.json()
+        console.log(data)
+        window.location.href= data.init_point          
+        
+        }
     return (
     <Layout>
         <div className='container'>
@@ -95,6 +103,10 @@ const CartPage = () => {
                             }
                         </div>)}
                 </div>
+
+                <button id='checkout' onClick={checkout}>
+                            Pagar
+                </button>
             </div>
         </div>
     </Layout>

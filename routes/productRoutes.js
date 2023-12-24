@@ -2,6 +2,7 @@ import express from 'express'
 import { isAdmin, requireSignIn } from '../middlewares/authMiddleware.js'
 import { createProductController, deleteProductController, getProductController, getSingleProductController, productCategoryController, productCountController, productFiltersController, productListController, productPhotoController, relatedProductController, searchProductController, updateProductController } from '../controllers/productController.js'
 import  formidable  from 'express-formidable'
+import { createOrder, receiveWebhook } from '../controllers/paymentController.js'
 const router = express.Router()
 
 //routes
@@ -39,5 +40,16 @@ router.get('/related-product/:pid/:cid', relatedProductController)
 
 //category wise product
 router.get("/product-category/:slug", productCategoryController)
+
+//payment routes
+
+
+router.post('cart/create-order', createOrder)
+router.get('cart/success', (req, res) => res.send('success'))
+router.get('cart/failure', (req, res) => res.send('failure'))
+router.get('cart/pending', (req, res) => res.send('pending'))
+
+router.post('/webhook', receiveWebhook)
+
 
 export default router
