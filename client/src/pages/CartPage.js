@@ -40,7 +40,7 @@ const CartPage = () => {
     //pay item
     const checkout =async (req, res) => { 
         const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/cart/create-order`)
-        const data = await response.json()
+        const data = await response
         console.log(data)
         window.location.href= data.init_point          
         
