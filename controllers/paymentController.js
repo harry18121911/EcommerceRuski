@@ -3,29 +3,30 @@ import mercadopago from 'mercadopago';
 export const createOrder = async (req, res) => {
     
     mercadopago.configure({
-        access_token: MERCADOPAGO_TOKEN,
+        access_token: "TEST-7941066120134772-122011-4908080d2f4670611b1eec73017a9624-1601374659"
 
     })
-    let NewItems=localStorage.getItem("cart");
+    /*let NewItems=localStorage.getItem("cart");*/
     const result = await mercadopago.preferences.create({
         
         items:[
             {
-                id:NewItems._id,
-                title:NewItems.name,
-                quantity:NewItems.quantity,
-                unit_price:NewItems.price,
+                title:"Laptop Lenovo",
+                unit_price: 5,
+                currency_id: "ARS",
+                quantity:1,
             },
-        items.push(NewItems)
+        /*items.push(NewItems)*/
         ],
         back_urls:{
-            success: `${process.env.REACT_APP_API}/cart/success`,
-            failure: `${process.env.REACT_APP_API}/cart/failure`,
-            pending: `${process.env.REACT_APP_API}/cart/pending`,
+            success: `http://localhost:8080/api/v1/product/success`,
+            failure: `http://localhost:8080/api/v1/product/failure`,
+            pending: `http://localhost:8080/api/v1/product/pending`,
         },
         notification_url: "https://45a1-2803-9800-94c0-7489-548d-7726-1df2-8b58.ngrok-free.app/webhook"
     })
-    
+    console.log(result)
+    res.send(result.body);
 };
 
 export const receiveWebhook = async (req,res) =>{

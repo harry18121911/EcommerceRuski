@@ -38,13 +38,21 @@ const CartPage = () => {
     }
 
     //pay item
-    const checkout =async (req, res) => { 
-        const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/cart/create-order`)
-        const data = await response
+    const checkout = async () => { 
+        try{
+        const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/create-order`)
+        const data =  await response.json()
         console.log(data)
         window.location.href= data.init_point          
         
+        }catch(error){
+            console.log(error)
+        
         }
+    };
+
+    
+        
     return (
     <Layout>
         <div className='container'>
@@ -104,7 +112,7 @@ const CartPage = () => {
                         </div>)}
                 </div>
 
-                <button id='checkout' onClick={checkout}>
+                <button onClick={()=> checkout()} >
                             Pagar
                 </button>
             </div>

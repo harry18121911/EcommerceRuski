@@ -44,10 +44,10 @@ router.get("/product-category/:slug", productCategoryController)
 //payment routes
 
 
-router.post('/cart/create-order', createOrder)
-router.get('/cart/success', (req, res) => res.send('success'))
-router.get('/cart/failure', (req, res) => res.send('failure'))
-router.get('/cart/pending', (req, res) => res.send('pending'))
+router.post('/create-order', createOrder)
+router.get('/success', (req, res) => res.send('success'))
+router.get('/failure', (req, res) => res.send('failure'))
+router.get('/pending', (req, res) => res.send('pending'))
 
 router.post('/webhook', receiveWebhook)
 
