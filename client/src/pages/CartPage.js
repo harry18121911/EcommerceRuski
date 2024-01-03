@@ -56,22 +56,19 @@ const CartPage = () => {
     const checkout = async () => { 
         try{
             let total = totalforpay()        
-            const order={
-                description: "Compra",
-                price: total,
-                quantity :1
-            }              
-            let uno = 1
+                    
+            
             /*let myCart = [...cart] 
             Whaaaaat i did*/ 
             const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/create-order`, {
-                description: order.description,
-                price: order.price,
-                quantity: order.quantity
+                description: "ORDER.DESCRIPTION",
+                price: total,
+                quantity: 1,
             })
-        const data =  await response.json()
-        console.log(data)
-        window.location.href= `${data.init_point}`          
+        
+        console.log(response.data)
+
+        window.location.href= response.data.init_point      
         
         }catch(error){
             console.log(error)
