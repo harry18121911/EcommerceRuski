@@ -1,20 +1,9 @@
 
 import mercadopago from 'mercadopago';
-import React,{useState,useEffect} from 'react'
 
 
 export const createOrder = async (req, res) => {
-    const [cart, setCart] = useCart();
-    
-    /*const [order, setOrder] = useState([]);
-
-    useEffect(() => {
-  const order = JSON.parse(localStorage.getItem('cart'));
-  if (cart) {
-   setCart(cart);
-  }
-}, []);*/
-
+    const {name,price,quantity}= req.body
     mercadopago.configure({
         access_token: "TEST-7941066120134772-122011-4908080d2f4670611b1eec73017a9624-1601374659"
 
@@ -26,10 +15,10 @@ export const createOrder = async (req, res) => {
         
         items:[
             {
-                title: cart.name,
-                unit_price: cart.price,
+                title: req.body.description,
+                unit_price: Number(req.body.price),
                 currency_id: "ARS",
-                quantity:cart.quantity,
+                quantity:Number(1)
             },
         
         ],

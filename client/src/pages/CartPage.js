@@ -4,6 +4,8 @@ import { useCart } from '../context/cart'
 import { useAuth } from '../context/auth'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+
+
 const CartPage = () => {
     const [auth, setAuth] = useAuth();
     const [cart, setCart] = useCart();
@@ -37,13 +39,39 @@ const CartPage = () => {
         }
     }
 
+
+    //totalforpay
+    const totalforpay =()=>{
+        try {
+            let total = 0
+            cart?.map(item => {total = total + item.price})
+            return parseInt(total);
+        } catch (error) {
+            
+        }
+    }
+
+
     //pay item
     const checkout = async () => { 
         try{
-        const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/create-order`)
+            let total = totalforpay()        
+            const order={
+                description: "Compra",
+                price: total,
+                quantity :1
+            }              
+            let uno = 1
+            /*let myCart = [...cart] 
+            Whaaaaat i did*/ 
+            const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/create-order`, {
+                description: order.description,
+                price: order.price,
+                quantity: order.quantity
+            })
         const data =  await response.json()
         console.log(data)
-        window.location.href= data.init_point          
+        window.location.href= `${data.init_point}`          
         
         }catch(error){
             console.log(error)
