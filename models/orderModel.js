@@ -1,10 +1,13 @@
 import mongoose from "mongoose";
 
-const orderSchema = new mongoose.Schema({
-    products : [{
+const orderSchema = new mongoose.Schema(
+    {
+    products : [
+        {
         type: mongoose.ObjectId,
         ref : "Products",       
-    }],
+    },
+],
     payment:{},
     buyer: {
         type:mongoose.ObjectId,

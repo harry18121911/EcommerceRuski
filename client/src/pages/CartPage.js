@@ -94,6 +94,8 @@ const CartPage = () => {
                         {cart?.length > 0 
                         ? `You Have ${cart.length} items in your cart ${auth?.token ? "" : "please login to checkout"}` : "Your Cart is Empty"  }
                     </h4>
+                    {/*<h1>{auth.user._id}</h1>*/}
+
                 </div>
             </div>
             <div className="row">

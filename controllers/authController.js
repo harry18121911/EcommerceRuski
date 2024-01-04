@@ -87,6 +87,7 @@ export const loginController = async(req,res)=>{
             success:true,
             message:'login successfully',
             user:{
+                _id: user._id,
                 name:user.name,
                 email:user,email,
                 phone:user.phone,
@@ -190,7 +191,8 @@ export const updateProfileController = async (req,res) =>{
 
 export const getOrdersController = async (req,res) =>{
     try {
-        const orders = await orderModel.find({buyer:req.user._id})
+        const orders = await orderModel
+        .find({buyer:req.user._id})
         .populate("products", "-photo")
         .populate("buyer","name");
         res.json(orders);
