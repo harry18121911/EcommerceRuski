@@ -70,7 +70,8 @@ const CartPage = () => {
         
         console.log(response.data)
 
-        window.location.href= response.data.init_point;  
+        window.open(response.data.init_point); 
+        navigate("/dashboard/user/orders") 
         localStorage.removeItem("cart");
         setCart([])
         }catch(error){
