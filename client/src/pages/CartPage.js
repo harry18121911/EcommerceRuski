@@ -64,12 +64,15 @@ const CartPage = () => {
                 description: "ORDER.DESCRIPTION",
                 price: total,
                 quantity: 1,
+                cart: cart,
+                user: auth?.user?._id
             })
         
         console.log(response.data)
 
-        window.location.href= response.data.init_point      
-        
+        window.location.href= response.data.init_point;  
+        localStorage.removeItem("cart");
+        setCart([])
         }catch(error){
             console.log(error)
         

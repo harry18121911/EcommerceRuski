@@ -1,8 +1,10 @@
 
 import mercadopago from 'mercadopago';
+import orderModel from '../models/orderModel.js';
 
 
 export const createOrder = async (req, res) => {
+    
     const {name,price,quantity}= req.body
     mercadopago.configure({
         access_token: "TEST-7941066120134772-122011-4908080d2f4670611b1eec73017a9624-1601374659"
@@ -31,6 +33,16 @@ export const createOrder = async (req, res) => {
     })
     console.log(result)
     res.send(result.body);
+    if(result){
+    const order = new orderModel({
+                products: req.body.cart,
+                payment: "Pagado",
+                buyer: req.body.user
+            }).save()
+             
+        }else{
+            console.log("ERROR IN ORDER TO DATABASE")
+        }   
 };
 
 export const receiveWebhook = async (req,res) =>{
