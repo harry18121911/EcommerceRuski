@@ -1,16 +1,21 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
+import AdminMenu from '../../components/Layout/AdminMenu'
 import Layout from '../../components/Layout/Layout'
-import UserMenu from '../../components/Layout/UserMenu'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 import { useAuth } from '../../context/auth'
 import moment from 'moment'
-const Orders = () => {
+import { Select } from 'antd'
+const {Option} = Select
+const AdminOrders = () => {
+    const [status,setStatus] = useState(["Not Process", "Processing", "Shipped","delivered", "cancel"])
+    const [changeStatus, setChangeStatus] = useState("")
     const [orders, setOrders] = useState([])
     const [auth,setAuth] = useAuth();
     
     const getOrders= async() =>{
         try {
-            const{data} = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/orders`)
+            const{data} = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/all-orders`)
             setOrders(data)
         } catch (error) {
             console.log(error)
@@ -20,16 +25,25 @@ const Orders = () => {
     useEffect(()=>{
         if(auth?.token) getOrders()
     },[auth?.token])
-  return (
-    <Layout title={"Dashboard - Orders"}>
-        <div className='container-fluid m-3 p-3'>
-            <div className='row'>
-                <div className='col-md-3'>
-                    <UserMenu/>
-                </div>
-                <div className='col-md-9'>
-                    <h1 className='text-center'>Orders</h1>
-                    {
+    
+    const handleChange = async (orderId, value) => {   
+        try {
+        const {data} = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/order-status/${orderId}`, {status:value,})
+        getOrders();
+        } catch (error) {
+        }
+     
+        }
+    return (
+    <>
+    <Layout title = {"All Orders Data"}>
+        <div className='row'>
+            <div className='col-md-3'>
+                <AdminMenu/>
+            </div>
+            <div className='col-md-9'>
+            <h1 className='text-center'>All Orders</h1>
+            {
                         orders?.map((o,i) =>{
                             return(
                                 <div className='border shadow'>
@@ -48,7 +62,17 @@ const Orders = () => {
                                     <tbody>
                                         <tr>
                                             <th>{i+1}</th>
-                                            <th>{o?.status}</th>
+                                            <th>
+                                                <Select 
+                                                bordered={false} 
+                                                onChange={(value) => 
+                                                handleChange(o._id,value)} 
+                                                defaultValue={o?.status}>
+                                                    {status.map((s, i) =>(
+                                                        <Option key={i} value={s}>{s}</Option>
+                                                    ))}
+                                                </Select>
+                                            </th>
                                             <th>{o?.buyer?.name}</th>
                                             <th>{moment(o?.createdAt).fromNow()}</th>
                                             <th>{o?.payment}</th>
@@ -76,12 +100,11 @@ const Orders = () => {
                             )
                         })
                     }
-                    
-                </div>
             </div>
         </div>
-    </Layout>
+        </Layout>
+    </>
   )
 }
 
-export default Orders
+export default AdminOrders
